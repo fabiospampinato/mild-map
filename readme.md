@@ -12,6 +12,8 @@ npm install --save mild-map
 
 It has the same API of a WeakMap, except that it just works with primitives too.
 
+It also implements the `size` property, like a Map.
+
 ## License
 
 MIT © Fabio Spampinato

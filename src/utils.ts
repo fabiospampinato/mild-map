@@ -5,7 +5,7 @@ import {SUPPORTS_SYMBOLS_AS_WEAKMAP_KEYS} from './constants';
 
 /* IMPORT */
 
-const isWeakReferrable = ( value: unknown ): value is object | symbol => {
+const isWeakReferrable = ( value: unknown ): value is object => {
 
   if ( value === null ) return false;
 

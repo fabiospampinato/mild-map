@@ -16,6 +16,8 @@ describe ( 'MildMap', it => {
     let primitive = 0;
     let object = {};
 
+    t.is ( map.size, 0 );
+
     t.is ( map.get ( primitive ), undefined );
     t.is ( map.get ( object ), undefined );
 
@@ -28,6 +30,8 @@ describe ( 'MildMap', it => {
     map.set ( primitive, 'primitive' );
     map.set ( object, 'object' );
 
+    t.is ( map.size, 2 );
+
     t.is ( map.get ( primitive ), 'primitive' );
     t.is ( map.get ( object ), 'object' );
 
@@ -37,8 +41,12 @@ describe ( 'MildMap', it => {
     t.true ( map.delete ( primitive ) );
     t.true ( map.delete ( object ) );
 
+    t.is ( map.size, 0 );
+
     map.set ( primitive, 'primitive' );
     map.set ( object, 'object' );
+
+    t.is ( map.size, 2 );
 
     /* CLEANUP */
 
@@ -55,6 +63,7 @@ describe ( 'MildMap', it => {
     await delay ( 500 );
 
     t.is ( deleted, 1 );
+    t.is ( map.size, 1 );
 
   });
 
