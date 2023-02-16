@@ -1,7 +1,13 @@
 
 /* IMPORT */
 
-import {isWeakReferrable} from './utils';
+import {isWeakReferable} from 'is';
+
+/* HELPERS */
+
+const isWeakabe = ( value: unknown ): value is object => { //FIXME: Overridden type guard for convenience, delete this once TS updates its types
+  return isWeakReferable ( value );
+};
 
 /* MAIN */
 
@@ -50,7 +56,7 @@ class MildMap<K, V> {
 
     this.#size -= 1;
 
-    if ( isWeakReferrable ( key ) ) {
+    if ( isWeakabe ( key ) ) {
 
       const token = this.#finalizationTokens.get ( key );
 
@@ -73,7 +79,7 @@ class MildMap<K, V> {
 
   get ( key: K ): V | undefined {
 
-    if ( isWeakReferrable ( key ) ) {
+    if ( isWeakabe ( key ) ) {
 
       return this.#weak.get ( key );
 
@@ -87,7 +93,7 @@ class MildMap<K, V> {
 
   has ( key: K ): boolean {
 
-    if ( isWeakReferrable ( key ) ) {
+    if ( isWeakabe ( key ) ) {
 
       return this.#weak.has ( key );
 
@@ -109,7 +115,7 @@ class MildMap<K, V> {
 
     }
 
-    if ( isWeakReferrable ( key ) ) {
+    if ( isWeakabe ( key ) ) {
 
       this.#weak.set ( key, value );
 
