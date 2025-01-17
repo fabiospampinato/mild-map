@@ -5,7 +5,7 @@ A WeakMap that supports any value, it holds strong references to primitives, and
 ## Install
 
 ```sh
-npm install --save mild-map
+npm install mild-map
 ```
 
 ## Usage
