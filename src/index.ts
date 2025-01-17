@@ -1,13 +1,7 @@
 
 /* IMPORT */
 
-import {isWeakReferable} from 'is';
-
-/* HELPERS */
-
-const isWeakabe = ( value: unknown ): value is object => { //FIXME: Overridden type guard for convenience, delete this once TS updates its types
-  return isWeakReferable ( value );
-};
+import {isWeakReferable} from './utils';
 
 /* MAIN */
 
@@ -16,11 +10,11 @@ class MildMap<K, V> {
   /* VARIABLES */
 
   #strong = new Map<K, V> ();
-  #weak = new WeakMap<any, V> ();
+  #weak = new WeakMap<WeakKey, V> ();
   #size = 0;
 
   #finalizationRegistry = new FinalizationRegistry ( () => this.#size -= 1 );
-  #finalizationTokens = new WeakMap<object, object> ();
+  #finalizationTokens = new WeakMap<WeakKey, object> ();
 
   /* CONSTRUCTOR */
 
@@ -56,7 +50,7 @@ class MildMap<K, V> {
 
     this.#size -= 1;
 
-    if ( isWeakabe ( key ) ) {
+    if ( isWeakReferable ( key ) ) {
 
       const token = this.#finalizationTokens.get ( key );
 
@@ -79,7 +73,7 @@ class MildMap<K, V> {
 
   get ( key: K ): V | undefined {
 
-    if ( isWeakabe ( key ) ) {
+    if ( isWeakReferable ( key ) ) {
 
       return this.#weak.get ( key );
 
@@ -93,7 +87,7 @@ class MildMap<K, V> {
 
   has ( key: K ): boolean {
 
-    if ( isWeakabe ( key ) ) {
+    if ( isWeakReferable ( key ) ) {
 
       return this.#weak.has ( key );
 
@@ -115,7 +109,7 @@ class MildMap<K, V> {
 
     }
 
-    if ( isWeakabe ( key ) ) {
+    if ( isWeakReferable ( key ) ) {
 
       this.#weak.set ( key, value );
 
